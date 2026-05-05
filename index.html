@@ -306,13 +306,13 @@ function renderDashboard() {
 
   document.getElementById('c-total').textContent = todos.length;
   document.getElementById('c-total-sub').textContent = 'contratos registrados';
-  document.getElementById('c-pago').textContent = brl(soma(pagos));
+  document.getElementById('c-fat').textContent = brl(soma([...pagos, ...aguard]));
   document.getElementById('c-pago-sub').textContent = pagos.length + ' contratos recebidos';
   document.getElementById('c-receber').textContent = brl(soma(aguard));
   document.getElementById('c-receber-sub').textContent = aguard.length + ' contratos pendentes';
   document.getElementById('c-debito').textContent = brl(soma(devedor));
   document.getElementById('c-debito-sub').textContent = devedor.length + ' contrato(s) em débito';
-  document.getElementById('c-volume').textContent = brl(somaVal(todos));
+  document.getElementById('c-volume').textContent = brl(somaVal([...pagos, ...aguard]));
   document.getElementById('c-fat').textContent = brl(soma(todos));
 
   renderPromotoras(todos);

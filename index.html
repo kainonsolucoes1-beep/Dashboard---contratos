@@ -299,7 +299,7 @@ async function carregarTEDs() {
     const data = await res.json();
     todasTEDs = data.map(t => ({
       ...t,
-      DATA: t.DATA instanceof Date ? t.DATA : new Date(String(t.DATA).split('/').reverse().join('-'))
+      DATA: new Date(t.DATA)
     }));
     popularFiltroMes();
     filtrarTEDs();

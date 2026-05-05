@@ -291,6 +291,62 @@ const CORES = ['#60a5fa','#fbbf24','#4ade80','#a78bfa','#f87171','#2dd4bf','#fb9
 let todosContratos = [];
 let chartInstance = null;
 
+ let todasTEDs = [];
+
+async function carregarTEDs() {
+  try {
+    const res = await fetch(API_URL + '?action=recebimentos');
+    const data = await res.json();
+    todasTEDs = data.map(t => ({
+      ...t,
+      DATA: t.DATA instanceof Date ? t.DATA : new Date(String(t.DATA).split('/').reverse().join('-'))
+    }));
+    popularFiltroMes();
+    filtrarTEDs();
+  } catch(e) {
+    document.getElementById('teds-body').innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text3);padding:2rem;font-family:var(--mono)">erro ao carregar TEDs</td></tr>';
+  }
+}
+
+function popularFiltroMes() {
+  const meses = [...new Set(todasTEDs.map(t => {
+    const d = t.DATA;
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0');
+  }))].sort().reverse();
+  const select = document.getElementById('filtro-mes');
+  select.innerHTML = '<option value="todos">Todos os meses</option>';
+  meses.forEach(m => {
+    const [ano, mes] = m.split('-');
+    const nomes = ['','Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+    const opt = document.createElement('option');
+    opt.value = m;
+    opt.textContent = nomes[parseInt(mes)] + ' ' + ano;
+    select.appendChild(opt);
+  });
+}
+
+function filtrarTEDs() {
+  const filtro = document.getElementById('filtro-mes').value;
+  const lista = filtro === 'todos' ? todasTEDs : todasTEDs.filter(t => {
+    const d = t.DATA;
+    const chave = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0');
+    return chave === filtro;
+  });
+  const total = lista.reduce((a,t) => a + (parseFloat(t.VALOR)||0), 0);
+  document.getElementById('total-teds').textContent = brl(total);
+  const tbody = document.getElementById('teds-body');
+  if (lista.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text3);padding:2rem;font-family:var(--mono)">nenhuma TED encontrada</td></tr>';
+    return;
+  }
+  tbody.innerHTML = lista.sort((a,b) => b.DATA - a.DATA).map(t => `
+    <tr>
+      <td style="font-family:var(--mono)">${t.DATA.toLocaleDateString('pt-BR')}</td>
+      <td style="font-weight:500">${t.PROMOTORA||''}</td>
+      <td style="font-family:var(--mono);color:var(--teal)">${brl(t.VALOR)}</td>
+      <td style="color:var(--text2)">${t.OBSERVACAO||''}</td>
+    </tr>`).join('');
+}
 async function carregarDados() {
   try {
     document.getElementById('last-update').textContent = 'buscando dados...';

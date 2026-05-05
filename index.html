@@ -235,7 +235,27 @@ tr:hover td { background: var(--bg3); }
       <div id="chart-legend" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;font-size:11px;font-family:var(--mono);color:var(--text2)"></div>
     </div>
   </div>
-
+ 
+ <div class="panel" style="margin-bottom:1.5rem">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:8px">
+    <p class="panel-title" style="margin:0">TEDs recebidas</p>
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+      <select id="filtro-mes" onchange="filtrarTEDs()" style="font-size:11px;font-family:var(--mono);padding:4px 10px;border-radius:20px;border:1px solid var(--border2);background:var(--bg2);color:var(--text2);cursor:pointer">
+        <option value="todos">Todos os meses</option>
+      </select>
+      <span style="font-size:12px;font-family:var(--mono);color:var(--text2)">Total: <strong id="total-teds" style="color:var(--text)">—</strong></span>
+    </div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr>
+        <th>Data</th><th>Promotora</th><th>Valor</th><th>Observação</th>
+      </tr></thead>
+      <tbody id="teds-body"><tr><td colspan="4" style="text-align:center;color:var(--text3);padding:2rem;font-family:var(--mono)">carregando...</td></tr></tbody>
+    </table>
+  </div>
+</div>
+ 
   <div class="panel" style="margin-bottom:2rem">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:8px">
       <p class="panel-title" style="margin:0">Contratos</p>

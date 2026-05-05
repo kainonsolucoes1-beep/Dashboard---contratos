@@ -321,8 +321,12 @@ function renderDashboard() {
 }
 
 function renderPromotoras(todos) {
+  const lista = todos.filter(c => {
+    const s = statusNorm(c.STATUS);
+    return s === 'PAGO EM CONTA' || s === 'AGUARDANDO REPASSE';
+  });
   const map = {};
-  todos.forEach(c => {
+  lista.forEach(c => {
     const p = c.Promotora || 'Sem promotora';
     if (!map[p]) map[p] = {fat:0,count:0};
     map[p].fat += c.FATURADO||0;

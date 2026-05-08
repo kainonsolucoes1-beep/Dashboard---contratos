@@ -375,9 +375,10 @@ function mostrarInfo(msg, erro=false) {
 
 function renderDashboard() {
   const todos = todosContratos;
-  const pagos = todos.filter(c => statusNorm(c.STATUS)==='PAGO EM CONTA' || statusNorm(c.STATUS)==='DISPONÍVEL PARA SAQUE');
-  const aguard  = todos.filter(c => statusNorm(c.STATUS)==='AGUARDANDO REPASSE');
-  const devedor = todos.filter(c => statusNorm(c.STATUS)==='SALDO DEVEDOR');
+  const pagos     = todos.filter(c => statusNorm(c.STATUS)==='PAGO EM CONTA');
+  const aguard    = todos.filter(c => statusNorm(c.STATUS)==='AGUARDANDO REPASSE');
+  const devedor   = todos.filter(c => statusNorm(c.STATUS)==='SALDO DEVEDOR');
+  const disponivel = todos.filter(c => statusNorm(c.STATUS)==='DISPONÍVEL PARA SAQUE');
   const soma = arr => arr.reduce((a,c)=>a+(c.FATURADO||0),0);
   const somaVal = arr => arr.reduce((a,c)=>a+(c.VALOR||0),0);
 
@@ -390,7 +391,7 @@ function renderDashboard() {
   document.getElementById('c-debito').textContent = brl(soma(devedor));
   document.getElementById('c-debito-sub').textContent = devedor.length + ' contrato(s) em débito';
   document.getElementById('c-volume').textContent = brl(somaVal([...pagos, ...aguard]));
-  document.getElementById('c-fat').textContent = brl(soma([...pagos, ...aguard]));
+  document.getElementById('c-fat').textContent = brl(soma(disponivel));
 
   renderPromotoras(todos);
   renderChart(pagos.length, aguard.length, devedor.length);

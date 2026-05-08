@@ -385,7 +385,6 @@ function renderDashboard() {
   document.getElementById('c-receber-sub').textContent = aguard.length + ' contratos pendentes';
   document.getElementById('c-debito').textContent = brl(soma(devedor));
   document.getElementById('c-debito-sub').textContent = devedor.length + ' contrato(s) em débito';
-  document.getElementById('c-volume').textContent = brl(somaVal([...pagos, ...aguard]));
   document.getElementById('c-fat').textContent = brl(soma(disponivel));
 
   renderPromotoras(todos);

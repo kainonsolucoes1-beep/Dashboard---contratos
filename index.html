@@ -284,8 +284,8 @@ const API_URL = 'https://script.google.com/macros/s/AKfycby-HvC-VBrFSd3fkny8HuUh
 
 const brl = v => 'R$ ' + Number(v||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const statusNorm = s => (s||'').trim().toUpperCase();
-const pillClass = s => s==='PAGO EM CONTA'?'pill-green':s==='AGUARDANDO REPASSE'?'pill-amber':'pill-red';
-const pillLabel = s => s==='PAGO EM CONTA'?'Pago':s==='AGUARDANDO REPASSE'?'Aguardando':'Devedor';
+const pillClass = s => s==='PAGO EM CONTA'?'pill-green':s==='AGUARDANDO REPASSE'?'pill-amber':s==='DISPONÍVEL PARA SAQUE'?'pill-green':'pill-red';
+const pillLabel = s => s==='PAGO EM CONTA'?'Pago':s==='AGUARDANDO REPASSE'?'Aguardando':s==='DISPONÍVEL PARA SAQUE'?'Disponível':'Devedor';
 
 const CORES = ['#60a5fa','#fbbf24','#4ade80','#a78bfa','#f87171','#2dd4bf','#fb923c','#e879f9'];
 

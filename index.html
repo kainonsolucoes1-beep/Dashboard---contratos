@@ -375,7 +375,7 @@ function mostrarInfo(msg, erro=false) {
 
 function renderDashboard() {
   const todos = todosContratos;
-  const pagos   = todos.filter(c => statusNorm(c.STATUS)==='PAGO EM CONTA');
+  const pagos = todos.filter(c => statusNorm(c.STATUS)==='PAGO EM CONTA' || statusNorm(c.STATUS)==='DISPONÍVEL PARA SAQUE');
   const aguard  = todos.filter(c => statusNorm(c.STATUS)==='AGUARDANDO REPASSE');
   const devedor = todos.filter(c => statusNorm(c.STATUS)==='SALDO DEVEDOR');
   const soma = arr => arr.reduce((a,c)=>a+(c.FATURADO||0),0);
